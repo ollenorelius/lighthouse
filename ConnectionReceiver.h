@@ -1,0 +1,6 @@
+
+class ConnectionReceiver
+{
+    ConnectionReceiver();
+    
+}
