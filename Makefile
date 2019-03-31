@@ -4,7 +4,7 @@ CFLAGS=-I
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 
-LDFLAGS = -lm
+LDFLAGS = -lm -lpthread
 
 lighthouse: $(OBJ)
 	mkdir -p build
