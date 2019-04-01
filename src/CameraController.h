@@ -1,6 +1,7 @@
 #include <memory>
-
+#include "../lib/libjpeg-turbo-master/turbojpeg.h"
 class ImageContainerModel;
+//class tjhandle;
 
 namespace raspicam
 {
@@ -23,7 +24,7 @@ private:
 
     long unsigned int jpegBufferSize_ = 0;
 
-    tjhandle jpegCompressor_;
+    tjhandle* jpegCompressor_;
 
     const int JPEG_QUALITY = 75;
     const int COLOR_COMPONENTS = 3;
@@ -31,5 +32,5 @@ private:
     int height_ = 1080;
     long unsigned int jpegSize_ = 0;
     unsigned char* compressedImage_ = NULL; //!< Memory is allocated by tjCompress2 if _jpegSize == 0
-    unsigned char buffer_[width_*height_*COLOR_COMPONENTS]; //!< Contains the uncompressed image
+    unsigned char buffer_[1920*1080*3]; //!< Contains the uncompressed image
 };
