@@ -1,1 +1,0 @@
-/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/tjexample.dir/tjexample.c.o  -o tjexample -Wl,-rpath,/home/pi/lighthouse/lib/libjpeg-turbo-master/build -rdynamic libturbojpeg.so.0.2.0 
