@@ -12,9 +12,11 @@ class CameraController
 {
 public:
     CameraController(ImageContainerModel* imageContainerModel);
+    ~CameraController();
 
 private:
     void threadTask();
+    void DEBUGFillBuffer(unsigned char* buffer);
 
     ImageContainerModel* imageContainerModel_;
     std::unique_ptr<raspicam::RaspiCam> camera_;
@@ -32,5 +34,7 @@ private:
     int height_ = 1080;
     long unsigned int jpegSize_ = 0;
     unsigned char* compressedImage_ = NULL; //!< Memory is allocated by tjCompress2 if _jpegSize == 0
-    unsigned char buffer_[1920*1080*3]; //!< Contains the uncompressed image
+    unsigned char* buffer_; //!< Contains the uncompressed image, TODO: should probably be a smart pointer
+
+    int DEBUGIterations = 0;
 };

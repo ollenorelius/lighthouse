@@ -9,12 +9,12 @@ LDFLAGS = -L/opt/vc/lib -L/opt/libjpeg-turbo/lib32 -lm -lpthread -lraspicam -lmm
 
 lighthouse: $(OBJ)
 	mkdir -p build
-	$(CC) -o build/$@ $^ $(LDFLAGS)
-	rm -f *.o
+	$(CC) -o $(subst src/,,build/$@) $(subst src/,,$(addprefix build/,$^)) $(LDFLAGS) -g
+	
 
 %.o: %.cpp
-	mkdir -p build/src
-	$(CC) -o build/$@ -c $^ $(CFLAGS) 
+	mkdir -p build
+	$(CC) -o $(subst src/,,build/$@) -c $^ $(CFLAGS) -g
 
 .PHONY: clean
 clean:

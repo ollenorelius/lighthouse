@@ -12,7 +12,7 @@ ConnectionReceiver::ConnectionReceiver(ClientListModel* clientListModel) :
     running_(true),
     threadQuit_(false)
 {
-     addressLength_ = sizeof(address_);
+    addressLength_ = sizeof(address_);
     setupReceiver();
 
     std::thread listenerThread(&ConnectionReceiver::threadTask, this);
