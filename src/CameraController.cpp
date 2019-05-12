@@ -1,8 +1,9 @@
 #include "CameraController.h"
-#include <raspicam/raspicam.h>
-#include <turbojpeg.h>
 #include "ImageModel.h"
 #include "ImageContainerModel.h"
+
+#include <raspicam/raspicam.h>
+#include <opencv2/opencv.hpp>
 
 #include <chrono>
 #include <iostream>
@@ -22,7 +23,6 @@ CameraController::CameraController(ImageContainerModel* imageContainerModel) :
 
     
 
-    jpegCompressor_ = new tjhandle(tjInitCompress());
 
 
     std::thread captureThread(&CameraController::threadTask, this);
@@ -60,11 +60,7 @@ void CameraController::threadTask()
             new ImageModel(height_*width_*3+1));
         }
         unsigned char* ptr = imageModel->getImagePointer();
-        /*tjCompress2(jpegCompressor_, buffer_, width_, 0, height_, TJPF_RGB,
-            &ptr, &jpegSize_, TJSAMP_444, JPEG_QUALITY,
-            TJFLAG_FASTDCT);*/
 
-        jpegBufferSize_ = jpegBufferSize_ >= jpegSize? jpegBufferSize_ : jpegSize;
 
         imageContainerModel_->setImageModel(imageModel);
     }

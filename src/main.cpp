@@ -18,7 +18,6 @@ int main(int argc, char* argv[])
     auto cameraController    = std::unique_ptr<CameraController>(new CameraController(imageContainerModel.get()));
 
     using namespace std::chrono_literals;
-    std::cout << "Boop\n";
     std::this_thread::sleep_for(100s);
     return 0;
 }

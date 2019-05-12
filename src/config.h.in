@@ -1,0 +1,2 @@
+#define lighthouse_VERSION_MAJOR @lighthouse_VERSION_MAJOR@
+#define lighthouse_VERSION_MINOR @lighthouse_VERSION_MINOR@
