@@ -11,3 +11,8 @@ bool ClientModel::getIsConnected()
 {
     return connected_;
 }
+
+int ClientModel::getSocketFileDescriptor()
+{
+    return socketFileDescriptor_;
+}

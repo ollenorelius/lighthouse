@@ -6,7 +6,6 @@ set (lighthouse_VERSION_MINOR 0)
 set (PROJECT_SOURCE_DIR ./src)
 set (PROJECT_BINARY_DIR ./build)
 set (PROJECT_INCLUDE_DIR ./include)
-set (raspicam_DIR ./lib/raspicam-0.1.6)
 
 
 
@@ -20,7 +19,6 @@ include_directories("${PROJECT_INCLUDE_DIR}")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 find_package(Threads REQUIRED)
-find_package(raspicam REQUIRED)
 find_package(OpenCV REQUIRED)
 
 add_executable(lighthouse 
@@ -31,9 +29,9 @@ src/ClientModel.cpp
 src/ConnectionReceiver.cpp
 src/ImageContainerModel.cpp
 src/ImageModel.cpp
+src/Signal.cpp
+src/SendImageController.cpp
 )
 
 target_link_libraries(lighthouse Threads::Threads)
-target_link_libraries(lighthouse ${raspicam_LIBS})
 target_link_libraries(lighthouse ${OpenCV_LIBS})
-

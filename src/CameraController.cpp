@@ -1,9 +1,8 @@
 #include "CameraController.h"
 #include "ImageModel.h"
 #include "ImageContainerModel.h"
-
-#include <raspicam/raspicam.h>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 
 #include <chrono>
 #include <iostream>
@@ -14,14 +13,18 @@ CameraController::CameraController(ImageContainerModel* imageContainerModel) :
     running_(false),
     imageContainerModel_(imageContainerModel)
 {
-    camera_ = std::unique_ptr<raspicam::RaspiCam>(new raspicam::RaspiCam);
-    buffer_ = new unsigned char[height_ * width_ * 3];
-    if (!camera_->open())
+    camera_ = std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(0));
+    if (!camera_->isOpened())
     {
-        std::cout << "Error opening camera!";
+        std::cout << "Error opening camera!\n";
     }
-
+    else
+    {
+        std::cout << "Opened camera successfully!\n";
+    }
     
+
+    //cv::namedWindow("Test window", cv::WINDOW_AUTOSIZE);
 
 
 
@@ -31,56 +34,26 @@ CameraController::CameraController(ImageContainerModel* imageContainerModel) :
 
 CameraController::~CameraController()
 {
-    delete buffer_;
 }
 
 void CameraController::threadTask()
 {
-    long unsigned int jpegSize = jpegBufferSize_;
     running_ = true;
 
     while (running_)
     {
+
+	    cv::Mat* frame;
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 #if 0
-        camera_->grab();
-        camera_->retrieve(buffer_, raspicam::RASPICAM_FORMAT_RGB);
+	    frame = new cv::Mat();
+	    *camera_ >> frame;
 #else
-        DEBUGFillBuffer(buffer_);
+	    frame = new cv::Mat(cv::imread("../res/test_image.jpg"));
 #endif
-        std::shared_ptr<ImageModel> imageModel;
-        if (camera_.get())
-        {
-        imageModel = std::shared_ptr<ImageModel>(
-            new ImageModel(camera_->getImageTypeSize ( raspicam::RASPICAM_FORMAT_RGB )));
-        }
-        else
-        {
-            imageModel = std::shared_ptr<ImageModel>(
-            new ImageModel(height_*width_*3+1));
-        }
-        unsigned char* ptr = imageModel->getImagePointer();
-
-
+        
+        std::shared_ptr<cv::Mat> imageModel = std::shared_ptr<cv::Mat>(frame);
         imageContainerModel_->setImageModel(imageModel);
     }
     threadQuit_ = true;
-}
-
-void CameraController::DEBUGFillBuffer(unsigned char* buffer)
-{
-    DEBUGIterations++;
-    if (DEBUGIterations == 255)
-    {
-        DEBUGIterations = 0;
-    }
-    for(int x = 0; x < width_; x++)
-    {
-        for(int y = 0; y < height_; y++)
-        {
-            buffer[x*height_*3 + y*3] = x/width_ * DEBUGIterations;
-            buffer[x*height_*3 + y*3 + 1] = y / height_ * DEBUGIterations;
-            buffer[x*height_*3 + y*3 + 2] = DEBUGIterations;
-        }
-    }
 }

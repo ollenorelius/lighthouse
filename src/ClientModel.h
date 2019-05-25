@@ -5,6 +5,7 @@ public:
     ClientModel(int socketFileDescriptor);
 
     bool getIsConnected();
+    int getSocketFileDescriptor();
 private:
     int socketFileDescriptor_;
 

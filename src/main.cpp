@@ -17,6 +17,9 @@ int main(int argc, char* argv[])
     auto imageContainerModel = std::unique_ptr<ImageContainerModel>(new ImageContainerModel());
     auto cameraController    = std::unique_ptr<CameraController>(new CameraController(imageContainerModel.get()));
 
+    ImageContainerModel* temp = imageContainerModel.get();
+    auto printImageCallback = [temp](){std::cout << temp->getImage() << "\n";};
+    imageContainerModel->getImageSet()->connect(printImageCallback);
     using namespace std::chrono_literals;
     std::this_thread::sleep_for(100s);
     return 0;
