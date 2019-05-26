@@ -16,3 +16,8 @@ int ClientModel::getSocketFileDescriptor()
 {
     return socketFileDescriptor_;
 }
+
+void ClientModel::setIsConnected(bool status)
+{
+    connected_ = status;
+}

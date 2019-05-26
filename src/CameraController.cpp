@@ -40,16 +40,16 @@ void CameraController::threadTask()
 {
     running_ = true;
 
+	cv::Mat* frame;
     while (running_)
     {
 
-	    cv::Mat* frame;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-#if 0
+#if 1
 	    frame = new cv::Mat();
-	    *camera_ >> frame;
+	    *camera_.get() >> *frame;
 #else
-	    frame = new cv::Mat(cv::imread("../res/test_image.jpg"));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	    frame = new cv::Mat(cv::imread("res/test_image.jpg"));
 #endif
         
         std::shared_ptr<cv::Mat> imageModel = std::shared_ptr<cv::Mat>(frame);

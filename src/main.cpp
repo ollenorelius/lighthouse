@@ -8,6 +8,7 @@
 #include "ClientModel.h"
 #include "ImageContainerModel.h"
 #include "CameraController.h"
+#include "SendImageController.h"
 
 
 int main(int argc, char* argv[])
@@ -16,11 +17,9 @@ int main(int argc, char* argv[])
     auto connectionReceiver  = std::unique_ptr<ConnectionReceiver>(new ConnectionReceiver(clientListModel.get()));
     auto imageContainerModel = std::unique_ptr<ImageContainerModel>(new ImageContainerModel());
     auto cameraController    = std::unique_ptr<CameraController>(new CameraController(imageContainerModel.get()));
+    auto sendImageController = std::unique_ptr<SendImageController>(new SendImageController(clientListModel.get(), imageContainerModel.get()));
 
-    ImageContainerModel* temp = imageContainerModel.get();
-    auto printImageCallback = [temp](){std::cout << temp->getImage() << "\n";};
-    imageContainerModel->getImageSet()->connect(printImageCallback);
     using namespace std::chrono_literals;
-    std::this_thread::sleep_for(100s);
+    std::this_thread::sleep_for(100000h);
     return 0;
 }

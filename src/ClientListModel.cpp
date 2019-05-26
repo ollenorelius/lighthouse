@@ -1,5 +1,6 @@
 #include "ClientListModel.h"
 #include "ClientModel.h"
+#include <algorithm>
 ClientListModel::ClientListModel()
 {
 
@@ -23,11 +24,10 @@ std::vector<ClientModel*> ClientListModel::getClientList()
 
 void ClientListModel::clearDisconnectedClients()
 {
-    for (auto it = clientModels_.end(); it != clientModels_.begin(); it--)
-    {
-        if (!it->get()->getIsConnected())
-        {
-            clientModels_.erase(it);
-        }
-    }
+    clientModels_.erase(
+        std::remove_if(
+            clientModels_.begin(),
+            clientModels_.end(),
+            [&](std::unique_ptr<ClientModel>& c){return !(c.get()->getIsConnected());}), 
+        clientModels_.end());
 }

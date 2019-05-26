@@ -72,8 +72,6 @@ void ConnectionReceiver::receiveConnection()
     int valread;
      valread = read( newSocket , buffer, 1024); 
      printf("number of clients in list: %d\n", clientListModel_->getClientList().size()); 
-     send(newSocket , hello , strlen(hello) , 0 ); 
-     printf("Hello message sent\n"); 
 }
 
 void ConnectionReceiver::threadTask()

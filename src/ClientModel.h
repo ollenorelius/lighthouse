@@ -6,6 +6,7 @@ public:
 
     bool getIsConnected();
     int getSocketFileDescriptor();
+    void setIsConnected(bool status);
 private:
     int socketFileDescriptor_;
 
