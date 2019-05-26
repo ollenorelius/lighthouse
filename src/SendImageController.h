@@ -13,6 +13,6 @@ private:
     void sendImage();
     ClientListModel* clientListModel_;
     ImageContainerModel* imageContainerModel_;
-    std::vector<unsigned char> createJPEG();
+    std::vector<unsigned char> retrieveImageAndCreateJPEG();
 
 };

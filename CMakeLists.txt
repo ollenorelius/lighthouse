@@ -6,7 +6,7 @@ set (lighthouse_VERSION_MINOR 0)
 set (PROJECT_SOURCE_DIR ./src)
 set (PROJECT_BINARY_DIR ./build)
 set (PROJECT_INCLUDE_DIR ./include)
-#set (CMAKE_BUILD_TYPE Debug)
+set (CMAKE_BUILD_TYPE Debug)
 
 
 configure_file ( "${PROJECT_SOURCE_DIR}/config.h.in"

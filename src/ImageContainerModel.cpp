@@ -21,3 +21,8 @@ Signal* ImageContainerModel::getImageSet()
 {
     return &imageSet_;
 }
+
+bool ImageContainerModel::hasValidImage()
+{
+    return !imageModel_.get()->empty();
+}

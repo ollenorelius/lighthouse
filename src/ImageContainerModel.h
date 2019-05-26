@@ -16,6 +16,7 @@ public:
     std::shared_ptr<cv::Mat> getImage();
     void setImageModel(std::shared_ptr<cv::Mat> imageModel);
     Signal* getImageSet();
+    bool hasValidImage();
 private:
     std::shared_ptr<cv::Mat> imageModel_;
     Signal imageSet_;

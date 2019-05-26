@@ -21,8 +21,9 @@ SendImageController::SendImageController(ClientListModel* clientListModel,
 void SendImageController::sendImage()
 {
     if (clientListModel_->getClientList().size() == 0) return;
+    if (!imageContainerModel_->hasValidImage()) return;
 
-    std::vector<uchar> jpegFile = createJPEG();
+    std::vector<uchar> jpegFile = retrieveImageAndCreateJPEG();
     int sizeOfPic = jpegFile.size();
     for (auto client : clientListModel_->getClientList())
     {
@@ -37,7 +38,7 @@ void SendImageController::sendImage()
     clientListModel_->clearDisconnectedClients();
 }
 
-std::vector<uchar> SendImageController::createJPEG()
+std::vector<uchar> SendImageController::retrieveImageAndCreateJPEG()
 {
     std::vector<uchar> jpegFile;
     std::vector<int> params(2);
